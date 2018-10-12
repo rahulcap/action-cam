@@ -1,9 +1,20 @@
 import cv2 as cv
+import argparse
 
 if __name__ == '__main__':
 
-    # Read video
-    video = cv.VideoCapture('videos/bball1_sd.mp4')
+    # parse arguments
+    ap = argparse.ArgumentParser()
+    ap.add_argument('-v', '--video', help='path to the video file')
+    args = vars(ap.parse_args())
+
+    # read video
+    video = None
+    if args.get("video", False):
+        video = cv.VideoCapture(args["video"])
+    else:
+        print 'Please specify video file'
+        exit()
 
     # Exit if video not opened
     if not video.isOpened():
